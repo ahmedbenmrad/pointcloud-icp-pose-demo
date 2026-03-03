@@ -211,3 +211,6 @@ outputs/*
 !outputs/screenshots/
 !outputs/screenshots/*
 !outputs/screenshots/*
+outputs/pose_T.txt
+outputs/pose.json
+outputs/ur_pose.txt
