@@ -1,5 +1,8 @@
 # pointcloud-icp-pose-demo
 3D robot-guidance demo: point cloud registration (ICP) + 6D pose output (Open3D).
+- **Input:** two point clouds (Open3D demo dataset)
+- **Method:** point-to-plane ICP registration
+- **Output:** 4×4 pose matrix + UR pose `p[x,y,z,rx,ry,rz]` saved in `outputs/`
 
 - **Input:** two point clouds (Open3D demo dataset)
 - **Method:** point-to-plane ICP registration
