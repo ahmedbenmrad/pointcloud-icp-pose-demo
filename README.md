@@ -3,6 +3,19 @@
 - **Input:** two point clouds (Open3D demo dataset)
 - **Method:** point-to-plane ICP registration
 - **Output:** 4×4 pose matrix + UR pose `p[x,y,z,rx,ry,rz]` saved in `outputs/`
+```bash
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+python src/main_icp_demo.py
+
+Dann “Outputs” hinzufügen:
+
+```md
+### Outputs
+- `outputs/pose_T.txt` (4x4 matrix)
+- `outputs/pose.json` (translation + rotation matrix)
+- `outputs/ur_pose.txt` (URScript pose: `p[x,y,z,rx,ry,rz]`)
 
 - **Input:** two point clouds (Open3D demo dataset)
 - **Method:** point-to-plane ICP registration
