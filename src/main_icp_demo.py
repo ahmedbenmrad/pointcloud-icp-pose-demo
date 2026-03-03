@@ -1,5 +1,7 @@
 import os
+import json
 import copy
+
 import numpy as np
 import open3d as o3d
 
@@ -23,9 +25,9 @@ def make_source_and_target():
         source = mesh.sample_points_poisson_disk(3000)
 
         T = np.eye(4)
-        T[:3, :3] = o3d.geometry.get_rotation_matrix_from_xyz(
-            (0.3, -0.2, 0.15))
+        T[:3, :3] = o3d.geometry.get_rotation_matrix_from_xyz((0.3, -0.2, 0.15))
         T[:3, 3] = np.array([0.3, 0.1, 0.2])
+
         target = copy.deepcopy(source).transform(T)
         return source, target
 
@@ -71,6 +73,27 @@ def save_pose(T, out_path="outputs/pose_T.txt"):
     print(f"Saved pose to: {out_path}")
 
 
+def save_pose_json(T, out_path="outputs/pose.json"):
+    """
+    Save pose to JSON (robot integration friendly).
+    """
+    os.makedirs(os.path.dirname(out_path), exist_ok=True)
+
+    R = T[:3, :3]
+    t = T[:3, 3]
+
+    data = {
+        "translation_m": {"x": float(t[0]), "y": float(t[1]), "z": float(t[2])},
+        "rotation_matrix": [[float(x) for x in row] for row in R],
+        "T_4x4": [[float(x) for x in row] for row in T],
+    }
+
+    with open(out_path, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2)
+
+    print(f"Saved pose JSON to: {out_path}")
+
+
 def show_two_clouds(a, b, title):
     """
     Shows ONLY TWO point clouds to make results easy to understand.
@@ -81,7 +104,6 @@ def show_two_clouds(a, b, title):
     vis.add_geometry(a)
     vis.add_geometry(b)
 
-    # Optional: set a better initial view
     vis.poll_events()
     vis.update_renderer()
 
@@ -102,8 +124,9 @@ if __name__ == "__main__":
     print("RMSE   :", result.inlier_rmse)
     print("T (4x4):\n", T)
 
-    # 3) Save pose
+    # 3) Save pose outputs
     save_pose(T, "outputs/pose_T.txt")
+    save_pose_json(T, "outputs/pose.json")
 
     # 4) Prepare colored clouds
     src = copy.deepcopy(source_d)
@@ -115,6 +138,6 @@ if __name__ == "__main__":
     src_aligned = copy.deepcopy(src).transform(T)
     src_aligned.paint_uniform_color([0, 0, 1])  # blue = aligned source (after)
 
-    # 5) SHOW BEFORE then AFTER (very clear)
+    # 5) Show BEFORE then AFTER (clear comparison)
     show_two_clouds(tgt, src, "BEFORE ICP (green=target, red=source)")
     show_two_clouds(tgt, src_aligned, "AFTER ICP (green=target, blue=aligned)")
