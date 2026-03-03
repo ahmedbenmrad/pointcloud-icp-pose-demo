@@ -11,3 +11,19 @@ python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 python src/main_icp_demo.py
+## Robot Guidance Output (Pose Export)
+
+This demo exports the estimated pose in two formats:
+
+- `outputs/pose_T.txt`  
+  4×4 homogeneous transform matrix **T** (rotation + translation)
+
+- `outputs/pose.json`  
+  Integration-friendly pose export:
+  - `translation_m`: x/y/z in meters  
+  - `rotation_matrix`: 3×3 rotation matrix  
+  - `T_4x4`: full 4×4 matrix
+
+### Example usage (pseudo)
+Use `translation_m` and `rotation_matrix` to convert the pose into your robot controller
+frame (Base/Tool/TCP) depending on your cell setup and calibration.
