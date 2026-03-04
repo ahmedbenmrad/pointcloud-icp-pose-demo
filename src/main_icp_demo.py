@@ -21,22 +21,17 @@ def make_source_and_target():
     except Exception as e:
         print("Demo data not available, using synthetic point clouds:", e)
 
+        mesh = o3d.geometry.TriangleMesh.create_sphere(
+            radius=1.0).subdivide_midpoint(2)
+        source = mesh.sample_points_poisson_disk(3000)
 
-<< << << < HEAD
-mesh = o3d.geometry.TriangleMesh.create_sphere(
-    radius=1.0).subdivide_midpoint(2)
-== == == =
-mesh = o3d.geometry.TriangleMesh.create_sphere(
-    radius=1.0).subdivide_midpoint(2)
->>>>>> > 6262d82df88c3395b43d14638f1ff9ba32975a58
-source = mesh.sample_points_poisson_disk(3000)
+        T = np.eye(4)
+        T[:3, :3] = o3d.geometry.get_rotation_matrix_from_xyz(
+            (0.3, -0.2, 0.15))
+        T[:3, 3] = np.array([0.3, 0.1, 0.2])
 
-T = np.eye(4)
-T[:3, :3] = o3d.geometry.get_rotation_matrix_from_xyz((0.3, -0.2, 0.15))
-T[:3, 3] = np.array([0.3, 0.1, 0.2])
-
-target = copy.deepcopy(source).transform(T)
-return source, target
+        target = copy.deepcopy(source).transform(T)
+        return source, target
 
 
 def preprocess(pcd, voxel=0.05):
@@ -68,7 +63,6 @@ def run_icp(source, target, voxel=0.05):
         init,
         o3d.pipelines.registration.TransformationEstimationPointToPlane(),
     )
-
     return result, source_d, target_d
 
 
@@ -160,7 +154,6 @@ def show_two_clouds(a, b, title):
 
     vis.poll_events()
     vis.update_renderer()
-
     vis.run()
     vis.destroy_window()
 
