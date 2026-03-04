@@ -207,10 +207,7 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 # Generated outputs
+# Generated outputs
 outputs/*
 !outputs/screenshots/
 !outputs/screenshots/*
-!outputs/screenshots/*
-outputs/pose_T.txt
-outputs/pose.json
-outputs/ur_pose.txt
