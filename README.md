@@ -14,6 +14,15 @@ python -m venv .venv
 pip install -r requirements.txt
 python src/main_icp_demo.py
 
+## Output files (generated)
+When you run the script, it generates:
+
+- `outputs/pose_T.txt`  (4x4 transform matrix)
+- `outputs/pose.json`   (translation + rotation matrix + full 4x4)
+- `outputs/ur_pose.txt` (UR pose: p[x,y,z,rx,ry,rz])
+
+These files are generated each run and are ignored by Git (`.gitignore`).
+
 ## Outputs (generated locally)
 When you run the script, it creates:
 - `outputs/pose_T.txt` (4x4 transform matrix)
