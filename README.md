@@ -7,7 +7,6 @@
 - **Output:** 4x4 pose matrix (R|t) saved to `outputs/pose_T.txt`
 
 ## Run (Windows)
-## Run (Windows)
 
 ```powershell
 python -m venv .venv
@@ -25,7 +24,11 @@ python src/main_icp_demo.py
 > Note: These files are generated each run and are ignored by Git (see `.gitignore`).
 
 ## Screenshots
+BEFORE (green=target, red=source)  
+![Before ICP](outputs/screenshots/01_before.png)
 
-![Before ICP](outputs/screenshots/01_before.png)  
-![After ICP](outputs/screenshots/02_after.png)  
+AFTER (green=target, blue=aligned)  
+![After ICP](outputs/screenshots/02_after.png)
+
+CONSOLE (Fitness/RMSE + saved files)  
 ![Console](outputs/screenshots/03_console.png)
